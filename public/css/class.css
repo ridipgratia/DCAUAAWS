@@ -1,0 +1,11 @@
+.flex_div{
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    
+    /* height: 70px; */
+}

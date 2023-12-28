@@ -1,0 +1,78 @@
+.from_list_show_div_1{
+    width: 100%;
+}
+.from_list_show_div_1{
+    width: 100%;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding: 5px 10px;
+    font-family: 'Roboto' sans-serif;
+}
+.para_head{
+    width: 38%;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 4px 5px;
+    font-size: 14px;
+}
+.para_1{
+    width: 58%;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    padding: 4px 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.modal_image{
+    width: 200px;
+    height: 100px;
+}
+.approval_btn_div button{
+    padding: 5px 30px !important;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    background: #364156;
+}
+.approval_btn_div button:last-child{
+    background: #7B442F;
+}
+#aproval_reason{
+    resize: none;
+    border-radius: 5px;
+}
+#reject_reason_div{
+    width: 100%;
+    margin-top: 10px;
+    display: none;
+}
+#reject_reason_submit{
+    padding: 5px 20px;
+    background: transparent;
+    border: 1px solid black;
+    font-size: 15px;
+}
+
+.district_reason_div{
+    padding: 10px 10px;
+    background: #DCDCDC;
+    display: none !important;
+}
+.district_reason_div p{
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 4px 0px !important;
+}
+.district_reason_div textarea{
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+.para_head_edit{
+    font-weight: bold;
+}

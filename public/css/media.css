@@ -1,0 +1,43 @@
+@media (min-width: 768px) {
+    #sidebar {
+        width: 17% !important;
+        display: block !important;
+        background-color: none !important;
+    }
+    main{
+        margin-left: 17%;
+    }
+    #nav_close{
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    #sidebar {
+        display: none;
+    }
+    #nav_close{
+        display: block;
+    }
+    .content {
+        margin-left: 0;
+    }
+}
+@media (max-width: 600px) {
+    .dt-buttons{
+        width: 100%;
+        justify-content: center;
+    }
+    .dt-buttons button{
+        width: 33%;
+    }
+    #users-table_filter{
+        width: 100%;
+    }
+    #users-table_filter label{
+        width: 100%;
+    }
+    #users-table_filter label input{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

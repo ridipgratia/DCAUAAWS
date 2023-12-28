@@ -1,0 +1,62 @@
+
+.main_progress_div{
+    /* width: 100%; */
+    
+    background: #345B5F;
+    margin-top: 10px;
+}
+.progres_div{
+    /* width: 100%; */
+    padding: 0px 5px;
+}
+.progres_div p{
+    /* width: 20%; */
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+}
+/* .progres_div p:nth-child(3){
+    width: 55%;
+} */
+.progres_div_1{
+    /* width: 100%; */
+    padding: 0px 5px;
+    flex-wrap: nowrap;
+}
+.progres_div_1 p{
+    font-weight: bold;
+    font-size: 12px;
+    /* width: 20%; */
+    color: white;
+}
+/* .progres_div_1 p:nth-child(3){
+    width: 50%;
+} */
+/* .progres_div_2{
+    width: 20%;
+} */
+.progres_div_2 p{
+    color: white;
+    width: 40px;
+    font-size: 16px;
+    height: 38px;
+    border-radius: 50%;
+    background: #0696C5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.progres_div_1 button{
+    color: white;
+}
+.form_edit_btn{
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    background: #0696C5;
+    width: 40px;
+    height: 38px;
+}

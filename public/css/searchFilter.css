@@ -1,0 +1,15 @@
+.filter_btn{
+    background: blue;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.5s;
+    padding: 5px 0px;
+}
+.filter_btn:nth-child(2){
+    background: grey;
+}
+.filter_btn:hover{
+    background: green;
+}

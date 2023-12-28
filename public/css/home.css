@@ -1,0 +1,61 @@
+#sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding-top: 20px;
+    overflow-y: scroll;
+    background-color: #f8f9fa; /* Change the background color as needed */
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
+}
+#sidebar::-webkit-scrollbar{
+    width: 0px;
+}
+.header_div{
+    width: 100%;
+}
+.header_div_1{
+    width: 45%;
+}
+.header_div_1:last-child{
+    justify-content: end;
+}
+.header_div_1 p{
+    margin-bottom: 0px;
+    font-weight: 600;
+    color: rgb(9, 136, 178);
+
+}
+.header_div_1 img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+.add_link_div{
+    width: 100%;
+    padding: 20px 0px;
+    margin: 20px 0px;
+    height: 80vh;
+}
+.add_link_div a{
+    height: 100px;
+}
+.dash_button{
+    background-color: rgb(144, 89, 233) ;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.6s;
+    padding: 14px 25px;
+    z-index: 13;
+}
+.dash_button:hover{
+    background-color: white ;
+    color: rgb(144, 89, 233);
+    padding: 14px 25px;
+    border-radius: 5px;
+}
+  

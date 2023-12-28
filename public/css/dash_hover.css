@@ -1,0 +1,11 @@
+body:hover::after{
+    position: absolute;
+    top:0;
+    left:0;
+    
+    content: "" !important;
+    background: rgb(129, 59, 241) !important;
+    opacity: 0.6;
+    width: 100% !important;
+    height: 100% !important;
+}

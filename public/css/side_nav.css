@@ -1,0 +1,12 @@
+.link_tag{
+    border: 1px solid lightgrey;
+    margin: 10px 0px;
+    padding: 3px 3px;
+    text-align: center;
+    border-radius: 4px;
+}
+.respon{
+    display: flex !important;
+    z-index: 99 !important;
+    width: 100% !important;
+}

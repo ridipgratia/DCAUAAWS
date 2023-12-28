@@ -1,0 +1,28 @@
+body{
+    background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0, 0, 0, 0.5)) ,url("../images/MGNREGA.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body:hover .dash_button{
+    background-color: white ;
+    color: rgb(144, 89, 233);
+    padding: 14px 25px;
+    border-radius: 5px;
+}
+
+.login_head{
+    width: 100%;
+    text-align: center !important;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.login_header{
+    border: none;
+    border-bottom: 2px solid black;
+    /* width: fit-content; */
+
+}
