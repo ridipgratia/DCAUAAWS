@@ -19,6 +19,10 @@
                         View
                         Document</a>
                 </div>
+                <div class="d-flex col-md-11 col-12 flex-wrap flex-column send_notify_div_2">
+                    <p>Notification Subject ...</p>
+                    <input type="text" id="notify_name" class="col-8 p-1" disabled placeholder="Enter Subject">
+                </div>
                 <div class="d-flex col-md-11 col-12 flex-wrap send_notify_div_2">
                     <p class="col-11">Your Discription</p>
                     <textarea class="col-12" name="" id="notify_text" disabled></textarea>

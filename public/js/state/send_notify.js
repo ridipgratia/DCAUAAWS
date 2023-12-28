@@ -27,6 +27,7 @@ $(document).ready(function () {
                     } else {
                         $('#notify_url').css('display', 'none');
                     }
+                    $('#notify_name').val(result.message[0].subject);
                     $('#notify_text').html(result.message[0].description);
                     $('#state_notify_remove').val(result.message[0].id);
                     $('.main_view_notify_div').eq(0).attr("style", "display:flex !important");

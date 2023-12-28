@@ -34,6 +34,7 @@
                     <p>Enter Notification Subject ...</p>
                     <input type="text" name="notify_name" class="col-8 p-1" placeholder="Enter Subject">
                 </div>
+                
                 <div class="d-flex col-md-11 col-12 flex-wrap send_notify_div_2">
                     <p class="col-11">Type Your Discription</p>
                     <textarea class="col-12" name="notify_text" id="" placeholder="Add Description Here"></textarea>
