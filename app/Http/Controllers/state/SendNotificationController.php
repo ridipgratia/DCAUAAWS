@@ -31,6 +31,7 @@ class SendNotificationController extends Controller
             $block_code = $request->block_code;
             $notify_file = $request->notify_file;
             $notify_text = $request->notify_text;
+            $notify_name = $request->notify_name;
             $notify_url = $request->file('notify_file');
             $status = 400;
             $message = null;
@@ -80,7 +81,8 @@ class SendNotificationController extends Controller
                                     'document' => $file_url,
                                     'date' => $today,
                                     "created_at" =>  date('Y-m-d H:i:s'),
-                                    "updated_at" => date('Y-m-d H:i:s')
+                                    "updated_at" => date('Y-m-d H:i:s'),
+                                    'subject' => $notify_name
                                 ]);
                             $check = true;
                         } catch (Exception $e) {
