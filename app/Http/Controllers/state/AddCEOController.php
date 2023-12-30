@@ -37,53 +37,61 @@ class AddCEOController extends Controller
                 $status = 400;
                 $message = "Fill All Necessary Input <br> And <br> Mobile Should Be 10 Numbers  ";
             } else {
-                $registration_id = 'State_' . $district_id;
-                $last_id = DB::table('make_ceo_pd')->orderBy('id', 'desc')->first();
-                if ($last_id == null) {
-                    $last_id = 1;
-                } else {
-                    $last_id = $last_id->id + 1;
-                }
-                $record_id = $registration_id . '_' . $last_id;
-                if (StateMethod::checkUserExists('make_ceo_pd', $registration_id)) {
-                    $status = 400;
-                    $message = "The User Already Exists !";
-                } else {
-                    $check = true;
-                    try {
-                        // Insert Into Login Details Table
-                        DB::table('login_details')->insert([
-                            'login_id' => $record_id,
-                            'login_email' => $email,
-                            'login_password' => Hash::make('password'),
-                            'role' => 2,
-                            'district' => $district_id,
-                            'login_name' => $name,
-                            'active' => 1
-                        ]);
-                        // Insert Into make_ceo_po table
-                        DB::table('make_ceo_pd')->insert([
-                            'phone' => $phone,
-                            'name' => $name,
-                            'email' => $email,
-                            'deginations' => $designation,
-                            'registration_id' => $registration_id,
-                            'distrcit_id' => $district_id,
-                            'record_id' => $record_id,
-                            "created_at" =>  date('Y-m-d H:i:s'),
-                            "updated_at" => date('Y-m-d H:i:s')
-                        ]);
-                        $check = true;
-                    } catch (Exception $err) {
-                        $check = false;
-                    }
-                    if ($check) {
-                        $status = 200;
-                        $message = ["User Created Successfully", $registration_id, 'password'];
+                if (AddUserByState::checkEmailExists($email)) {
+                    $registration_id = 'State_' . $district_id;
+                    $last_id = DB::table('make_ceo_pd')->orderBy('id', 'desc')->first();
+                    if ($last_id == null) {
+                        $last_id = 1;
                     } else {
-                        $status = 400;
-                        $message = "Something Error Executed !";
+                        $last_id = $last_id->id + 1;
                     }
+                    $record_id = $registration_id . '_' . $last_id;
+                    if (StateMethod::checkUserExists('make_ceo_pd', $registration_id)) {
+                        $status = 400;
+                        $message = "The User Already Exists !";
+                    } else {
+                        $check = true;
+                        DB::beginTransaction();
+                        try {
+                            // Insert Into Login Details Table
+                            DB::table('login_details')->insert([
+                                'login_id' => $record_id,
+                                'login_email' => $email,
+                                'login_password' => Hash::make('password'),
+                                'role' => 2,
+                                'district' => $district_id,
+                                'login_name' => $name,
+                                'active' => 1
+                            ]);
+                            // Insert Into make_ceo_po table
+                            DB::table('make_ceo_pd')->insert([
+                                'phone' => $phone,
+                                'name' => $name,
+                                'email' => $email,
+                                'deginations' => $designation,
+                                'registration_id' => $registration_id,
+                                'distrcit_id' => $district_id,
+                                'record_id' => $record_id,
+                                "created_at" =>  date('Y-m-d H:i:s'),
+                                "updated_at" => date('Y-m-d H:i:s')
+                            ]);
+                            $check = true;
+                            DB::commit();
+                        } catch (Exception $err) {
+                            $check = false;
+                            DB::rollBack();
+                        }
+                        if ($check) {
+                            $status = 200;
+                            $message = ["User Created Successfully", $registration_id, 'password'];
+                        } else {
+                            $status = 400;
+                            $message = "Something Error Executed !";
+                        }
+                    }
+                } else {
+                    $status = 400;
+                    $message = "User Email Already Exists !";
                 }
             }
             return response()->json(['status' => $status, 'message' => $message]);

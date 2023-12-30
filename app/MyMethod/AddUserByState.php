@@ -111,4 +111,20 @@ class AddUserByState
         }
         return [$status, $message];
     }
+    // Check User Email Exists 
+    public static function checkEmailExists($email)
+    {
+        try {
+            $email_exists = DB::table('login_details')
+                ->where('login_email', $email)
+                ->get();
+            if (count($email_exists) == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $error) {
+            return false;
+        }
+    }
 }
