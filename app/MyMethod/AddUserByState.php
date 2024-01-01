@@ -6,6 +6,7 @@ use App\MyMethod\StateMethod;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AddUserByState
@@ -72,7 +73,7 @@ class AddUserByState
             } else {
                 try {
                     $registration_id = DB::table($main_table)->where('id', $id)->select('record_id')->get();
-                    DB::table($table)->where('login_id', $registration_id[0]->record_id)->update(['login_password' => $password]);
+                    DB::table($table)->where('login_id', $registration_id[0]->record_id)->update(['login_password' => Hash::make($password)]);
                     $message = "Password Changed";
                     $status = 200;
                 } catch (Exception $err) {
