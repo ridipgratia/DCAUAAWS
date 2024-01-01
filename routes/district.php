@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\district\AddPOByDistrictController;
 use App\Http\Controllers\district\DelayCompensationList;
 use App\Http\Controllers\district\DistrictController;
 use App\Http\Controllers\district\NotificationController;
@@ -79,4 +80,7 @@ Route::group(['middleware' => ['CheckDistrictAuth']], function () {
     Route::get('/delay/revert_form', [DelayCompensationList::class, 'revert_form']);
     // Unemployement Revert Form To Block
     Route::get('/unemp/revert_form', [UnempAllowance::class, 'revert_form']);
+
+    // Add PO Login Load Page
+    Route::get('/add-po-login', [AddPOByDistrictController::class, 'add_po_index']);
 });
