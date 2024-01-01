@@ -321,16 +321,25 @@ class DelayEmpForm
         }
     }
     // Update Edit Form Data In Database
-    public static function updateEditFormDatabase($table, $update_fields, $request_id)
+    public static function updateEditFormDatabase($table, $sub_table, $update_fields, $request_id)
     {
+        DB::beginTransaction();
         try {
             DB::table($table)
                 ->where('request_id', Crypt::decryptString($request_id))
                 ->update(
                     $update_fields
                 );
+            DB::table($sub_table)
+                ->where('form_request_id', Crypt::decryptString($request_id))
+                ->update([
+                    'district_remarks' => NULL,
+                    'state_remarks' => NULL
+                ]);
+            DB::commit();
             return true;
         } catch (Exception $err) {
+            DB::rollBack();
             return false;
         }
     }
@@ -390,7 +399,7 @@ class DelayEmpForm
                         if ($check) {
                             $bank_statement_url = $request->file('bank_statement_url')->store('public/images/' . $submited_by[0]->submited_by . '/unemploye_allowance');
                             $update_fields['bank_statement_url'] = $bank_statement_url;
-                            $check_update = DelayEmpForm::updateEditFormDatabase($table, $update_fields, $request->request_id);
+                            $check_update = DelayEmpForm::updateEditFormDatabase($table, $sub_table, $update_fields, $request->request_id);
                             if ($check_update) {
                                 $message = "Successfully Update Form Data";
                                 $status = 200;
