@@ -49,7 +49,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#state_delay_form_btn', function () {
         console.log("Ok");
-        stateclass.viewFormData("/delay_compensation/view_form_by_id", $(this));
+        stateclass.viewFormData("/delay_compensation/approval_form_view", $(this));
     });
     // View Delay Document 
     $(document).on('click', '#show_form_document', function () {

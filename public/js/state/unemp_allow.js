@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     // View All Data By ID
     $(document).on('click', '#state_delay_form_btn', function () {
-        stateclass.viewFormData("/unemp_allow/view_form_by_id", $(this));
+        stateclass.viewFormData("/unemp_allow/approval_form_view", $(this));
     });
     // View Unemploye Document 
     $(document).on('click', '#show_form_document', function () {

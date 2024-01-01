@@ -125,4 +125,8 @@ Route::group(['middleware' => ['CheckStateAuth']], function () {
     Route::get('/delay_compensation/approved_pending_form', [DelayCompensationController::class, 'approved_pending_form']);
     //Unemployed pending route
     Route::get('/unemp_allow/unemp_pending_form', [UnempAllowController::class, 'unemp_pending_form']);
+    // View Approval Form Data By ID Delay
+    Route::get('/delay_compensation/approval_form_view', [DelayCompensationController::class, 'approval_form_view']);
+    // View Approval Form Data By ID Unemployee
+    Route::get('/unemp_allow/approval_form_view', [UnempAllowController::class, 'approval_form_view']);
 });
