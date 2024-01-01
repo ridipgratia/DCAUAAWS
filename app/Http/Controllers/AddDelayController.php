@@ -106,52 +106,51 @@ class AddDelayController extends Controller
                             if (isset(Auth::user()->block)) {
                                 $block_id = Auth::user()->block;
                             }
+                            // try {
+
+                            //     $check_error = true;
+                            // } catch (Exception $err) {
+                            //     $check_error = false;
+                            // }
+                            DB::beginTransaction();
                             try {
                                 DB::table('delay_form_status')
                                     ->insert([
                                         'form_request_id' => $request_id,
                                     ]);
-                                $check_error = true;
-                            } catch (Exception $err) {
+                                DB::table('add_dc')->insert([
+                                    'submited_by' => $emp_code,
+                                    'code_number' => $code_number,
+                                    'mr_number' => $mr_number,
+                                    'person_delay' => $person_delay,
+                                    'designation_delay' => $designation_delay,
+                                    'recover_amount' => $recover_amount,
+                                    'date_recover_amount' => $date_recover_amount,
+                                    'date_deposite_bank' => $date_deposite_bank,
+                                    'bank_statement_url' => $temp_bank_statement_url,
+                                    'date_of_submit' => $submited_date,
+                                    'year_of_submit' => $submited_year,
+                                    'month_of_submit' => $submited_month,
+                                    'request_id' => $request_id,
+                                    'approval_status' => 1,
+                                    'district_id' => $district_id,
+                                    'block_id' => $block_id,
+                                    'gp_id' => $gp_id,
+                                    "created_at" =>  date('Y-m-d H:i:s'),
+                                    "updated_at" => date('Y-m-d H:i:s')
+                                ]);
                                 $check_error = false;
+                                DB::commit();
+                            } catch (Exception $error) {
+                                $check_error = true;
+                                DB::rollBack();
                             }
                             if ($check_error) {
-                                try {
-                                    DB::table('add_dc')->insert([
-                                        'submited_by' => $emp_code,
-                                        'code_number' => $code_number,
-                                        'mr_number' => $mr_number,
-                                        'person_delay' => $person_delay,
-                                        'designation_delay' => $designation_delay,
-                                        'recover_amount' => $recover_amount,
-                                        'date_recover_amount' => $date_recover_amount,
-                                        'date_deposite_bank' => $date_deposite_bank,
-                                        'bank_statement_url' => $temp_bank_statement_url,
-                                        'date_of_submit' => $submited_date,
-                                        'year_of_submit' => $submited_year,
-                                        'month_of_submit' => $submited_month,
-                                        'request_id' => $request_id,
-                                        'approval_status' => 1,
-                                        'district_id' => $district_id,
-                                        'block_id' => $block_id,
-                                        'gp_id' => $gp_id,
-                                        "created_at" =>  date('Y-m-d H:i:s'),
-                                        "updated_at" => date('Y-m-d H:i:s')
-                                    ]);
-                                    $check_error = false;
-                                } catch (Exception $error) {
-                                    $check_error = true;
-                                }
-                                if ($check_error) {
-                                    $status = 400;
-                                    $message = "Please Try Later Problem At database";
-                                } else {
-                                    $status = 200;
-                                    $message = "Form Successfully Submited";
-                                }
-                            } else {
                                 $status = 400;
-                                $message = "Please try Later Problem At database";
+                                $message = "Please Try Later Problem At database";
+                            } else {
+                                $status = 200;
+                                $message = "Form Successfully Submited";
                             }
                         }
                     } else {

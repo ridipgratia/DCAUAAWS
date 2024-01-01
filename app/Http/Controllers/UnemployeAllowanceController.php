@@ -107,53 +107,52 @@ class UnemployeAllowanceController extends Controller
                             if (isset(Auth::user()->block)) {
                                 $block_id = Auth::user()->block;
                             }
+                            // try {
+
+                            //     $check_error = true;
+                            // } catch (Exception $err) {
+                            //     $check_error = false;
+                            // }
+                            DB::beginTransaction();
                             try {
                                 DB::table('unemp_form_status')
                                     ->insert([
                                         'form_request_id' => $request_id
                                     ]);
-                                $check_error = true;
-                            } catch (Exception $err) {
+                                DB::table('add_unemp_allowance')->insert([
+                                    'submited_by' => $emp_code,
+                                    'card_number' => $card_number,
+                                    'work_demand' => $work_demand,
+                                    'total_day_unemple' => $total_day_unemple,
+                                    'person_delay' => $person_delay,
+                                    'designation_delay' => $designation_delay,
+                                    'recover_amount' => $recover_amount,
+                                    'date_recover_amount' => $date_recover_amount,
+                                    'date_deposite_bank' => $date_deposite_bank,
+                                    'bank_statement_url' => $temp_bank_statement_url,
+                                    'date_of_submit' => $submited_date,
+                                    'year_of_submit' => $submited_year,
+                                    'month_of_submit' => $submited_month,
+                                    'request_id' => $request_id,
+                                    'approval_status' => 1,
+                                    'district_id' => $district_id,
+                                    'block_id' => $block_id,
+                                    'gp_id' => $gp_id,
+                                    "created_at" =>  date('Y-m-d H:i:s'),
+                                    "updated_at" => date('Y-m-d H:i:s')
+                                ]);
                                 $check_error = false;
+                                DB::commit();
+                            } catch (Exception $error) {
+                                $check_error = true;
+                                DB::rollBack();
                             }
                             if ($check_error) {
-                                try {
-                                    DB::table('add_unemp_allowance')->insert([
-                                        'submited_by' => $emp_code,
-                                        'card_number' => $card_number,
-                                        'work_demand' => $work_demand,
-                                        'total_day_unemple' => $total_day_unemple,
-                                        'person_delay' => $person_delay,
-                                        'designation_delay' => $designation_delay,
-                                        'recover_amount' => $recover_amount,
-                                        'date_recover_amount' => $date_recover_amount,
-                                        'date_deposite_bank' => $date_deposite_bank,
-                                        'bank_statement_url' => $temp_bank_statement_url,
-                                        'date_of_submit' => $submited_date,
-                                        'year_of_submit' => $submited_year,
-                                        'month_of_submit' => $submited_month,
-                                        'request_id' => $request_id,
-                                        'approval_status' => 1,
-                                        'district_id' => $district_id,
-                                        'block_id' => $block_id,
-                                        'gp_id' => $gp_id,
-                                        "created_at" =>  date('Y-m-d H:i:s'),
-                                        "updated_at" => date('Y-m-d H:i:s')
-                                    ]);
-                                    $check_error = false;
-                                } catch (Exception $error) {
-                                    $check_error = true;
-                                }
-                                if ($check_error) {
-                                    $status = 400;
-                                    $message = "Please Try Later Problem At database";
-                                } else {
-                                    $status = 200;
-                                    $message = "Form Successfully Submited";
-                                }
-                            } else {
                                 $status = 400;
                                 $message = "Please Try Later Problem At database";
+                            } else {
+                                $status = 200;
+                                $message = "Form Successfully Submited";
                             }
                         }
                     } else {
@@ -168,5 +167,4 @@ class UnemployeAllowanceController extends Controller
             return response()->json(['status' => $status, 'message' => $message]);
         }
     }
-    
 }

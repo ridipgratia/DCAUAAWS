@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddFTOController;
+use App\Http\Controllers\BlockSettingController;
 use App\Http\Controllers\BlockViewNotificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -46,6 +47,8 @@ Route::group(['middleware' => ['CheckBlockAuth']], function () {
     Route::get('/block_view_notification', [BlockViewNotificationController::class, 'index']);
     // View  Full Notification
     Route::get('/block_view_full_notify', [BlockViewNotificationController::class, 'block_view_full_notify']);
+    // Change Password Page Load
+    Route::get('/chanage-password', [BlockSettingController::class, 'changePasswordIndex']);
 });
 
 // State Routes
