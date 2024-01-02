@@ -15,7 +15,8 @@
     margin: 0px !important;
 }
 .notify_btn_1{
-    background-color: #1F314F;
+    /* background-color: #1F314F; */
+    background:  black;
     color: #998D9F;
     border: none;
     text-transform: uppercase;
