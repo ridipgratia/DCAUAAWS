@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="d-flex col-12  justify-content-center">
-            <button class="col-md-2 btn btn-primary" for="btncheck1">Serach...</button>
+            <button class="col-md-2 btn btn-primary" for="btncheck1">Search...</button>
         </div>
     </form>
 </div>
