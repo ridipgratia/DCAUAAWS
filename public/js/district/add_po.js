@@ -1,4 +1,4 @@
-console.log("Add PO")
+console.log("Add POgit stash")
 import DistrictClass from "./DistrictClass.js";
 const districtclass = new DistrictClass();
 $(document).ready(function () {
