@@ -1,3 +1,4 @@
+console.log("Add PO")
 import DistrictClass from "./DistrictClass.js";
 const districtclass = new DistrictClass();
 $(document).ready(function () {

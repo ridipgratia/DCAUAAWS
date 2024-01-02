@@ -1,3 +1,4 @@
+console.log("List PO");
 import StateClass from "./StateClass.js";
 $(document).ready(function () {
     var url = "/list_po/for_table";
