@@ -64,6 +64,11 @@
                 <x-data-table-component :columns=$columns>
 
                 </x-data-table-component> --}}
+                <div class="d-flex col-12 mb-3">
+                    <x-user-list-table-component>
+
+                    </x-user-list-table-component>
+                </div>
                 <div class="d-flex justify-content-center">
                     <form id="add_po_form" class="col-md-10 mt-5 bg-white shadow p-5 rounded">
                         @csrf
@@ -83,8 +88,20 @@
 
     </div>
     {{-- Data View Modal --}}
+    {{-- Add Modal To View --}}
+    @include('layouts.state.state-user-view-modal', ['header_name' => 'PO'])
+    {{-- {{ Reset Password Modal  }} --}}
+    @include('layouts.state.reset_password_modal', ['header_name' => 'PO'])
 
-    @include('layouts.delay_form_list')
+    {{-- Edit User Data Modal --}}
+    @include('layouts.state.edit_data_modal', [
+        'header_name' => 'PO',
+        'label_name' => 'Block',
+        'stages' => $blocks,
+        'districts' => $districts,
+    ]);
+
+    {{-- @include('layouts.delay_form_list') --}}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -101,7 +118,9 @@
 
     {{-- All Code Of Ajax Related --}}
 
-    <script type="module" src="{{ asset('js/district/delay_approval.js') }}"></script>
+    {{-- <script type="module" src="{{ asset('js/district/delay_approval.js') }}"></script> --}}
+    <script type="module" src="{{ asset('js/district/add_po.js') }}"></script>
+    <script src="{{ asset('js/state/use_method.js') }}"></script>
     <script src="{{ asset('js/sidenav.js') }}"></script>
 </body>
 

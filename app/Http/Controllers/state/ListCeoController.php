@@ -112,25 +112,19 @@ class ListCeoController extends Controller
                 // } else {
                 //     $check = true;
                 // }
-                if ($check) {
-                    $update_user_data = [
-                        $user_phone,
-                        $user_name,
-                        $user_email,
-                        $user_degisnation,
-                        // $select_stage
-                    ];
-                    try {
-                        StateMethod::updateUserData('make_ceo_pd', $id, $update_user_data);
-                        $status = 200;
-                        $message = "User Data Upated";
-                    } catch (Exception $error) {
-                        $status = 400;
-                        $message = "Some Error. Try Later !";
-                    }
+                $update_user_data = [
+                    $user_phone,
+                    $user_name,
+                    $user_email,
+                    $user_degisnation,
+                    // $select_stage
+                ];
+                if (StateMethod::updateUserData('make_ceo_pd', $id, $update_user_data)) {
+                    $status = 200;
+                    $message = "User Data Upated";
                 } else {
                     $status = 400;
-                    $message = "District Already Assigned";
+                    $message = "Some Error. Try Later !";
                 }
             }
             return response()->json(['status' => $status, 'message' => $message]);

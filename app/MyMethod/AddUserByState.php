@@ -31,8 +31,12 @@ class AddUserByState
     }
     public static function user_list($table)
     {
-        $users_list = DB::table($table)->where('delete', 1)->select('id', 'name', 'deginations', 'record_id')->get();
-        return $users_list;
+        try {
+            $users_list = DB::table($table)->where('delete', 1)->select('id', 'name', 'deginations', 'record_id')->get();
+            return $users_list;
+        } catch (Exception $err) {
+            return [];
+        }
     }
     public static function user_html_data($user_data)
     {
@@ -52,7 +56,7 @@ class AddUserByState
             <p class="col-md-7 col-sm-12 border border-primary">' . $user_data[0]->deginations . '</p>
             <p class="col-md-4 col-sm-12 border border-primary">Registration ID</p>
             <p class="col-md-7 col-sm-12 border border-primary">' . $user_data[0]->registration_id . '</p>
-            <p class="col-md-4 col-sm-12 border border-primary">District</p>
+            <p class="col-md-4 col-sm-12 border border-primary" id="view_po_user">District</p>
             <p class="col-md-7 col-sm-12 border border-primary">' . $user_data[0]->join_col_name . '</p>
             <div class="col-12">
                 <button type="button" class=" ' . $active . '">Active Employe</button>
@@ -94,15 +98,18 @@ class AddUserByState
         $status = null;
         $message = null;
         if (isset($id)) {
+            DB::beginTransaction();
             try {
                 $data = DB::table($table)->where('id', $id)->select('record_id')->get();
                 // DB::table($table)->where('id', $id)->delete();
                 DB::table($table)->where('id', $id)->update(['delete' => 0]);
                 // DB::table('login_details')->where('login_id', $data[0]->registration_id)->delete();
                 DB::table('login_details')->where('login_id', $data[0]->record_id)->update(['active' => 0]);
+                DB::commit();
                 $message = "User Inactived ";
                 $status = 200;
             } catch (Exception $err) {
+                DB::rollBack();
                 $status = 400;
                 $message = "Server Error ! Please Try Again";
             }

@@ -99,11 +99,15 @@ class DistrictMethod
     // Get District Name
     public static function getDistrictName()
     {
-        $district_name = DB::table('districts')
-            ->where('district_code', Auth::user()->district)
-            ->select('district_name')
-            ->get();
-        return $district_name[0]->district_name;
+        try {
+            $district_name = DB::table('districts')
+                ->where('district_code', Auth::user()->district)
+                ->select('district_name')
+                ->get();
+            return $district_name[0]->district_name;
+        } catch (Exception $err) {
+            return NULL;
+        }
     }
     // Get All Block Names 
     public static function getBlocksName()
@@ -552,5 +556,73 @@ class DistrictMethod
         } catch (Exception $err) {
             return false;
         }
+    }
+    // View All PO User 
+    public static function getAllPOUser($table)
+    {
+        try {
+            $users_list = DB::table($table)->where('delete', 1)
+                ->select('id', 'name', 'deginations', 'record_id')
+                ->where('district_id', Auth::user()->district)
+                ->get();
+            return $users_list;
+        } catch (Exception $err) {
+            return [];
+        }
+    }
+    // Check Is District Authorized 
+    public static function checkAuthDistrict($id)
+    {
+        try {
+            $check = DB::table('make_po')
+                ->where('id', $id)
+                ->where('district_id', Auth::user()->district)
+                ->select('id')
+                ->get();
+            if (count($check) == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception $err) {
+            return false;
+        }
+    }
+    // Remove PO User 
+    public static function removePOUserMethod($request, $table)
+    {
+        $id = $_GET['id'];
+        $status = null;
+        $message = null;
+        if (isset($id)) {
+            DB::beginTransaction();
+            try {
+                $data = DB::table($table)
+                    ->where('id', $id)
+                    ->where('district_id', Auth::user()->district)
+                    ->select('record_id')
+                    ->get();
+                // DB::table($table)->where('id', $id)->delete();
+                DB::table($table)
+                    ->where('id', $id)
+                    ->where('district_id', Auth::user()->district)
+                    ->update(['delete' => 0]);
+                // DB::table('login_details')->where('login_id', $data[0]->registration_id)->delete();
+                DB::table('login_details')
+                    ->where('login_id', $data[0]->record_id)
+                    ->update(['active' => 0]);
+                DB::commit();
+                $message = "User Inactived ";
+                $status = 200;
+            } catch (Exception $err) {
+                DB::rollBack();
+                $status = 400;
+                $message = "Server Error ! Please Try Again";
+            }
+        } else {
+            $status = 400;
+            $message = null;
+        }
+        return [$status, $message];
     }
 }

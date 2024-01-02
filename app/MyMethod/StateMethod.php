@@ -53,19 +53,27 @@ class StateMethod
     public static function updateUserData($table, $id, $update_data)
     {
         // $registration_id = "State_" . $update_data[4];
-        $registration_id = DB::table($table)->where('id', $id)->select('record_id')->get();
-        DB::table($table)->where('id', $id)->update([
-            'phone' => $update_data[0],
-            'name' => $update_data[1],
-            'email' => $update_data[2],
-            'deginations' => $update_data[3],
-            // 'distrcit_id' => $update_data[4],
-            // 'registration_id' => $registration_id
-        ]);
-        DB::table('login_details')->where('login_id', $registration_id[0]->record_id)
-            ->update([
-                'login_email' => $update_data[2]
+        DB::beginTransaction();
+        try {
+            $registration_id = DB::table($table)->where('id', $id)->select('record_id')->get();
+            DB::table($table)->where('id', $id)->update([
+                'phone' => $update_data[0],
+                'name' => $update_data[1],
+                'email' => $update_data[2],
+                'deginations' => $update_data[3],
+                // 'distrcit_id' => $update_data[4],
+                // 'registration_id' => $registration_id
             ]);
+            DB::table('login_details')->where('login_id', $registration_id[0]->record_id)
+                ->update([
+                    'login_email' => $update_data[2]
+                ]);
+            DB::commit();
+            return true;
+        } catch (Exception $err) {
+            DB::rollBack();
+            return false;
+        }
     }
     // Get All District
     public static function getDistricts()
@@ -572,17 +580,17 @@ class StateMethod
     public static function approvalNotification($notify_data)
     {
         // try {
-            DB::table('notification')
-                ->insert([
-                    'district_id' => $notify_data['district_id'],
-                    'block_id' => $notify_data['block_id'],
-                    'description' => $notify_data['description'],
-                    'date' => $notify_data['today'],
-                    "created_at" =>  date('Y-m-d H:i:s'),
-                    "updated_at" => date('Y-m-d H:i:s'),
-                    'subject' => $notify_data['subject']
-                ]);
-            return true;
+        DB::table('notification')
+            ->insert([
+                'district_id' => $notify_data['district_id'],
+                'block_id' => $notify_data['block_id'],
+                'description' => $notify_data['description'],
+                'date' => $notify_data['today'],
+                "created_at" =>  date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s'),
+                'subject' => $notify_data['subject']
+            ]);
+        return true;
         // } catch (Exception $err) {
         //     return false;
         // }

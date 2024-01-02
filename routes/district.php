@@ -83,4 +83,16 @@ Route::group(['middleware' => ['CheckDistrictAuth']], function () {
 
     // Add PO Login Load Page
     Route::get('/add-po-login', [AddPOByDistrictController::class, 'add_po_index']);
+    // Add PO Login 
+    Route::post('/add-po-by-district', [AddPOByDistrictController::class, 'addPoLogin']);
+    // Get PO User List 
+    Route::get('/get-po-user-list', [AddPOByDistrictController::class, 'viewAllPOList']);
+    // View Particular PO User Data 
+    Route::get('/view-po-user-data', [AddPOByDistrictController::class, 'viewPoUserData']);
+    // Edit PO User View Load 
+    Route::get('/edit-po-user-load', [AddPOByDistrictController::class, 'editPOUserLoad']);
+    // Edit PO User Submit 
+    Route::post('/edit-po-user-submit', [AddPOByDistrictController::class, 'editPOUserSubmit']);
+    // Deactivate PO User 
+    Route::get('/remove-po-user', [AddPOByDistrictController::class, 'removePOUser']);
 });

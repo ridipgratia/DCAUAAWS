@@ -40,9 +40,9 @@ Route::group(['middleware' => ['CheckStateAuth']], function () {
     // Add CEO PD User By State Form Submit
     Route::post('/add_ceo', [AddCEOController::class, 'add_user']);
     // Add PO User By State Load Form 
-    Route::get('/add_po', [AddPOController::class, 'index']);
+    // Route::get('/add_po', [AddPOController::class, 'index']);
     // Add PO User By State Form Submit
-    Route::post('/add_po', [AddPOController::class, 'add_user']);
+    // Route::post('/add_po', [AddPOController::class, 'add_user']);
     // List CEO/PD  Users 
     Route::get('/list_ceo', [ListCeoController::class, 'list_ceo']);
     // List PO Data
@@ -62,15 +62,15 @@ Route::group(['middleware' => ['CheckStateAuth']], function () {
     // Remove CEO PD User 
     Route::get('/list_ceo/remove_user', [ListCeoController::class, 'remove_user']);
     // Remove PO User
-    Route::get('/list_po/remove_user', [ListPoController::class, 'remove_user']);
+    // Route::get('/list_po/remove_user', [ListPoController::class, 'remove_user']);
     // Edit CEO PD User
     Route::get('/list_ceo/edit_user', [ListCeoController::class, 'edit_user']);
     // Edit PO User
-    Route::get('/list_po/edit_user', [ListPoController::class, 'edit_user']);
+    // Route::get('/list_po/edit_user', [ListPoController::class, 'edit_user']);
     // Edit CEO PD User Submit 
     Route::post('/list_ceo/edit_user_submit', [ListCeoController::class, 'edit_user_submit']);
     // Edit Po User submit
-    Route::post('/list_po/edit_user_submit', [ListPoController::class, 'edit_user_submit']);
+    // Route::post('/list_po/edit_user_submit', [ListPoController::class, 'edit_user_submit']);
 
     // Get Block By Change District 
     Route::get('/list_po/get_blocks', [AddPOController::class, 'get_blocks']);
