@@ -473,5 +473,20 @@ class DistrictClass {
         });
         event.attr('disabled', false);
     }
+    // Reset Password PO User By District
+    async resetPassword(id) {
+        $.ajax({
+            type: "get",
+            url: "/set-reset-password",
+            data: {
+                employee_id: id
+            },
+            success: function (result) {
+                console.log(result);
+            }, error: function (data) {
+                console.log(data);
+            }
+        });
+    }
 }
 export default DistrictClass;

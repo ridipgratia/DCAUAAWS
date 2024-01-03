@@ -5,17 +5,23 @@ namespace App\Http\Controllers\district;
 use App\Http\Controllers\Controller;
 use App\MyMethod\AddUserByState;
 use App\MyMethod\DistrictMethod;
+use App\MyMethod\MailSender;
 use App\MyMethod\StateMethod;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+use Ramsey\Uuid\Type\Integer;
 
 class AddPOByDistrictController extends Controller
 {
     public function add_po_index(Request $request)
     {
+        // $str = Str::random(50);
+        // $str = Str::replace("/", "a", $str);
         $blocks = DB::table('blocks')
             ->select('block_id', 'block_name')
             ->where('district_id', Auth::user()->district)
@@ -242,6 +248,40 @@ class AddPOByDistrictController extends Controller
         if ($request->ajax()) {
             $result = DistrictMethod::removePOUserMethod($request, 'make_po');
             return response()->json(['status' => $result[0], 'message' => $result[1]]);
+        }
+    }
+    // Reset password PO User By District 
+    public function resetPasswordByDistrict(Request $request)
+    {
+        if ($request->ajax()) {
+            $status = 400;
+            $message = "";
+            if ($_GET['employee_id']) {
+                $id = $_GET['employee_id'];
+                $check_res = DistrictMethod::checkValidPO($id);
+                if ($check_res[0]) {
+                    if (count($check_res[1]) == 1) {
+                        $password = DistrictMethod::generatePassword();
+                        $emailData = [
+                            'subject' => 'Reset Password By District Panel',
+                            'password' => $password
+                        ];
+                        $check = MailSender::sendMailer($emailData, $check_res[1][0]->email, 'mail_blades.set_reset_password');
+                        if ($check) {
+                            $message = "Password Sent To PO Email ";
+                        } else {
+                            $message = "Please Re-Generate password Email Lost ";
+                        }
+                    } else {
+                        $message = "Employee Not Find In Your District  ";
+                    }
+                } else {
+                    $message = "Server Error Please Try Later !";
+                }
+            } else {
+                $message = "Select a PO user ";
+            }
+            return response()->json(['status' => 200, 'message' => $message]);
         }
     }
 }

@@ -625,4 +625,36 @@ class DistrictMethod
         }
         return [$status, $message];
     }
+    // Check Valid PO User For District 
+    public static function checkValidPO($id)
+    {
+        $check = false;
+        $check_po = "";
+        try {
+            $check_po = DB::table('make_po')
+                ->where('district_id', Auth::user()->district)
+                ->where('id', $id)
+                ->select(
+                    'email',
+                    'record_id'
+                )
+                ->get();
+            $check = true;
+        } catch (Exception $err) {
+            $check = false;
+        }
+        return [$check, $check_po];
+    }
+    // Genarate password 
+    public static function generatePassword()
+    {
+        $string_upper = "ABCDEFGHIJKLMNOPQRST";
+        $string_lower = strtolower($string_upper);
+        $number = "1234567890";
+        $password = "";
+        for ($j = 0; $j < 2; $j++) {
+            $password .= $string_upper[rand(0, strlen($string_upper) - 1)] . $string_lower[rand(0, strlen($string_lower) - 1)] . $number[rand(0, strlen($number) - 1)];
+        }
+        return str_shuffle($password);
+    }
 }

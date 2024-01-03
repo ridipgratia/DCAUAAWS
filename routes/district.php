@@ -95,4 +95,5 @@ Route::group(['middleware' => ['CheckDistrictAuth']], function () {
     Route::post('/edit-po-user-submit', [AddPOByDistrictController::class, 'editPOUserSubmit']);
     // Deactivate PO User 
     Route::get('/remove-po-user', [AddPOByDistrictController::class, 'removePOUser']);
+    Route::get('/set-reset-password', [AddPOByDistrictController::class, 'resetPasswordByDistrict']);
 });
