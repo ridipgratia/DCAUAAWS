@@ -31,6 +31,31 @@
         #show_form_document {
             display: none !important;
         }
+
+        .add_po_user {
+            border: none;
+            font-size: 14px;
+            font-family: 'Times New Roman', Times, serif;
+            background: #001F3E;
+            padding: 5px 30px;
+            color: #98A8AD;
+            font-weight: bold;
+        }
+
+        .add_po_user:last-child {
+            background: #0074D9;
+            color: white;
+        }
+
+        .po_user_div:last-child {
+            display: none !important;
+        }
+
+        #po_user_icon {
+            color: white;
+            font-size: 14px;
+            position: absolute;
+        }
     </style>
 </head>
 
@@ -64,12 +89,24 @@
                 <x-data-table-component :columns=$columns>
 
                 </x-data-table-component> --}}
-                <div class="d-flex col-12 mb-3">
+
+
+                {{-- Section For View And Add PO User --}}
+                <div class="d-flex col-12 justify-content-center mt-2">
+                    <div class="d-flex col-10 justify-content-center align-items-center">
+                        <span id="po_user_icon"><i class="fa-solid fa-street-view"></i></span>
+                        <button class="add_po_user" id="view_po_btn">View PO
+                            User</button>
+                        <button class="add_po_user" id="add_po_btn">Add PO User</button>
+
+                    </div>
+                </div>
+                <div class="d-flex col-12 mb-3 po_user_div">
                     <x-user-list-table-component>
 
                     </x-user-list-table-component>
                 </div>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center po_user_div">
                     <form id="add_po_form" class="col-md-10 mt-5 bg-white shadow p-5 rounded">
                         @csrf
                         <div class="login_head">

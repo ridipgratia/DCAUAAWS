@@ -1,4 +1,4 @@
-console.log("Add POgit stash")
+
 import DistrictClass from "./DistrictClass.js";
 const districtclass = new DistrictClass();
 $(document).ready(function () {
@@ -75,4 +75,12 @@ $(document).ready(function () {
             }
         });
     });
+    $(document).on('click', '#view_po_btn', function () {
+        $('.po_user_div').eq(0).attr('style', 'display:flex !important')
+        $('.po_user_div').eq(1).attr('style', 'display:none !important');
+    });
+    $(document).on('click', '#add_po_btn', function () {
+        $('.po_user_div').eq(1).attr('style', 'display:flex !important')
+        $('.po_user_div').eq(0).attr('style', 'display:none !important');
+    })
 });
