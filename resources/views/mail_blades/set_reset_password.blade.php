@@ -10,7 +10,7 @@
 
 <body>
     <p>Reset Your Password By District </p>
-    <p>{{ $data['password'] }}</p>
+    <p>Password : {{ $data['password'] }}</p>
 </body>
 
 </html>
