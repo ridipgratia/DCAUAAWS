@@ -474,12 +474,15 @@ class DistrictClass {
         event.attr('disabled', false);
     }
     // Reset Password PO User By District
-    async resetPassword(id) {
-        $.ajax({
+    async resetPassword(id, btn) {
+        await $.ajax({
             type: "get",
             url: "/set-reset-password",
             data: {
                 employee_id: id
+            },
+            beforeSend: function () {
+                btn.html('<i class="fa-solid fa-spinner"></i>');
             },
             success: function (result) {
                 console.log(result);
@@ -487,6 +490,7 @@ class DistrictClass {
                 console.log(data);
             }
         });
+        btn.html('<i class=" fa-solid fa-lock"></i>');
     }
 }
 export default DistrictClass;

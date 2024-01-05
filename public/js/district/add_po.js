@@ -44,7 +44,7 @@ $(document).ready(function () {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 // districtclass.editUserSubmit('edit-po-user-submit', '#state_user_edit_form', id);
-                districtclass.resetPassword(id);
+                districtclass.resetPassword(id, $(this));
             }
         });
     });
