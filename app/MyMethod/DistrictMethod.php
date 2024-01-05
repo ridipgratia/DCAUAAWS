@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class DistrictMethod
@@ -656,5 +657,22 @@ class DistrictMethod
             $password .= $string_upper[rand(0, strlen($string_upper) - 1)] . $string_lower[rand(0, strlen($string_lower) - 1)] . $number[rand(0, strlen($number) - 1)];
         }
         return str_shuffle($password);
+    }
+    public static function resetPasswordMethod($password, $po_details, $id)
+    {
+        DB::beginTransaction();
+        try {
+            DB::table('login_details')
+                ->where('login_email', $po_details[0]->email)
+                ->where('district', Auth::user()->district)
+                ->update([
+                    'login_password' => Hash::make($password)
+                ]);
+            DB::commit();
+            return true;
+        } catch (Exception $err) {
+            DB::rollBack();
+            return false;
+        }
     }
 }

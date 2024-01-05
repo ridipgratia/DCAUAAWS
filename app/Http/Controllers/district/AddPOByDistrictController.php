@@ -268,7 +268,11 @@ class AddPOByDistrictController extends Controller
                         ];
                         $check = MailSender::sendMailer($emailData, $check_res[1][0]->email, 'mail_blades.set_reset_password');
                         if ($check) {
-                            $message = "Password Sent To PO Email ";
+                            if (DistrictMethod::resetPasswordMethod($password, $check_res[1], $id)) {
+                                $message = "Password Sent To PO Email ";
+                            } else {
+                                $message = "Server Error Please Try Later";
+                            }
                         } else {
                             $message = "Please Re-Generate password Email Lost ";
                         }

@@ -16,8 +16,8 @@ $(document).ready(function () {
     // Display Reset Password Modal
     $(document).on('click', '.state_list_reset_btn', function () {
         var id = $(this).val();
-        $('#state_user_pass_reset').modal('show');
-        $('#state_user_pass_reset_submit').val(id);
+        // $('#state_user_pass_reset').modal('show');
+        // $('#state_user_pass_reset_submit').val(id);
     });
     // Reset User Pass
     $(document).on('click', '#state_user_pass_reset_submit', function () {
