@@ -10,4 +10,8 @@ class StateController extends Controller
     {
         return view('state.state_dash');
     }
+    public function resetPasswordLoad(Request $request)
+    {
+        return view('mail_blades.set_reset_password');
+    }
 }

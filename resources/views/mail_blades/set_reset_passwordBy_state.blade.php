@@ -11,28 +11,6 @@
         body {
             background: #ECEEF1;
         }
-
-
-        .password {
-            font-size: 14px;
-            font-weight: bold;
-            font-family: 'Times New Roman', Times, serif;
-            padding: 8px 40px;
-            cursor: pointer;
-            border-radius: 5px;
-            background: #54BBFB;
-            border: none;
-            outline: none;
-            color: white;
-        }
-
-        .text {
-            width: 60%;
-            text-align: center;
-            font-size: 17px;
-            font-family: 'Times New Roman', Times, serif;
-            font-weight: 500;
-        }
     </style>
 </head>
 
@@ -49,12 +27,15 @@
                     <tr>
                         <td style="padding: 20px; background-color: #ffffff;">
                             <div style="display: flex; justify-content: center; align-items: center;">
+                                <!-- Your email content here -->
                                 <h1 style="font-size: 22px;text-align:center;">Your New Password</h1>
                             </div>
                             <div style="display: flex; justify-content: center; align-items: center;">
+                                <!-- Your email content here -->
                                 <p class="password">{{ $data['password'] }}</p>
                             </div>
                             <div style="display: flex; justify-content: center; align-items: center;">
+                                <!-- Your email content here -->
                                 <p class="text">
                                     The password was changed by state panel. If you need , you can also change your
                                     password by your self .

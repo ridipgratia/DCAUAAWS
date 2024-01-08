@@ -483,14 +483,28 @@ class DistrictClass {
             },
             beforeSend: function () {
                 btn.html('<i class="fa-solid fa-spinner"></i>');
+                btn.attr('disabled', true);
             },
             success: function (result) {
-                console.log(result);
+                if (result.status == 200) {
+                    Swal.fire(
+                        'success',
+                        result.message,
+                        'success'
+                    );
+                } else {
+                    Swal.fire(
+                        'info',
+                        result.message,
+                        'info'
+                    );
+                }
             }, error: function (data) {
                 console.log(data);
             }
         });
         btn.html('<i class=" fa-solid fa-lock"></i>');
+        btn.attr('disabled', false);
     }
 }
 export default DistrictClass;

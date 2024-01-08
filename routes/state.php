@@ -56,10 +56,12 @@ Route::group(['middleware' => ['CheckStateAuth']], function () {
     // View User PO Data
     Route::get('/list_po/view_data', [ListPoController::class, 'view_data']);
     // Reset CEO User Password 
-    Route::get('/list_ceo/reset_pass', [ListCeoController::class, 'reset_pass']);
+    // Route::get('/list_ceo/reset_pass', [ListCeoController::class, 'reset_pass']);
     // Reset PO User Password
-    Route::get('/list_po/reset_pass', [ListPoController::class, 'reset_pass']);
+    // Route::get('/list_po/reset_pass', [ListPoController::class, 'reset_pass']);
     // Remove CEO PD User 
+    // Reset Password By State 
+    Route::get('/set-reset-password-ceo', [ListCeoController::class, 'setResetPassCeo']);
     Route::get('/list_ceo/remove_user', [ListCeoController::class, 'remove_user']);
     // Remove PO User
     // Route::get('/list_po/remove_user', [ListPoController::class, 'remove_user']);
@@ -129,4 +131,7 @@ Route::group(['middleware' => ['CheckStateAuth']], function () {
     Route::get('/delay_compensation/approval_form_view', [DelayCompensationController::class, 'approval_form_view']);
     // View Approval Form Data By ID Unemployee
     Route::get('/unemp_allow/approval_form_view', [UnempAllowController::class, 'approval_form_view']);
+
+    // reset Password Template Load 
+    Route::get('/reset-password-template', [StateController::class, 'resetPasswordLoad']);
 });

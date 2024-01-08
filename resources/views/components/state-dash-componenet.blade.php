@@ -10,12 +10,12 @@
             class="fa-solid fa-plus"></i> ADD CEO/PD
         LOGIN</a> --}}
 
-    <a href="/add_po" class="d-flex  col-sm-5 col-12 flex-column m-2 border rounded nav_box pt-3 pb-3"
+    {{-- <a href="/add_po" class="d-flex  col-sm-5 col-12 flex-column m-2 border rounded nav_box pt-3 pb-3"
         style="padding:60px 0px !important; text-decoration: none;">
         <h6 class="fs-1 col-12 text-center text-white"><i class="fa-solid fa-user"></i></h6>
         <p class=" text-decoration-none col-12 text-center text-white">
             ADD PROGRAM OFFICER LOGIN</p>
-    </a>
+    </a> --}}
     {{-- <a href="/add_po"
         class="nav_box text-decoration-none  col-sm-12  border text-center pt-4 pb-4 m-3 text-white"><i
             class="fa-solid fa-plus"></i> ADD PROGRAM OFFICER LOGIN</a> --}}
@@ -67,12 +67,12 @@
         <p class=" text-decoration-none col-12 text-center text-white">
             NOTIFICATION</p>
     </a>
-    <a href="/unemp_allow/all_list" class="d-flex  col-sm-5 col-12 flex-column m-2 border rounded nav_box pt-3 pb-3"
+    {{-- <a href="/unemp_allow/all_list" class="d-flex  col-sm-5 col-12 flex-column m-2 border rounded nav_box pt-3 pb-3"
         style="padding:60px 0px !important; text-decoration: none;">
         <h6 class="fs-1 col-12 text-center text-white"><i class="fa-solid fa-list"></i></h6>
         <p class=" text-decoration-none col-12 text-center text-white">
             TRACK NOTIFICATION</p>
-    </a>
+    </a> --}}
     {{-- <a href="/list_po"
         class="nav_box text-decoration-none  col-sm-12 border text-center pt-4 m-3 pb-4 text-white"><i
             class="fa-solid fa-plus"></i> LIST PROGRAM OFFICER LOGIN</a> --}}

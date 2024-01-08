@@ -440,5 +440,39 @@ class StateClass {
         });
 
     }
+    async resetPasswordCEO(id, btn) {
+        await $.ajax({
+            type: "get",
+            url: "/set-reset-password-ceo",
+            data: {
+                employee_id: id
+            },
+            beforeSend: function () {
+                btn.html('<i class="fa-solid fa-spinner"></i>');
+                btn.attr('disabled', true);
+            },
+            success: function (result) {
+                if (result.status == 200) {
+                    Swal.fire(
+                        'sucess',
+                        result.message,
+                        'success'
+                    );
+                } else {
+                    Swal.fire(
+                        'info',
+                        result.message,
+                        'info'
+                    );
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+        btn.html('<i class=" fa-solid fa-lock"></i>');
+        btn.attr('disabled', false);
+    }
+
 }
 export default StateClass;

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\state;
 
 use App\Http\Controllers\Controller;
 use App\MyMethod\AddUserByState;
+use App\MyMethod\DistrictMethod;
+use App\MyMethod\MailSender;
 use App\MyMethod\StateMethod;
 use Exception;
 use Illuminate\Http\Request;
@@ -112,19 +114,71 @@ class ListCeoController extends Controller
                 // } else {
                 //     $check = true;
                 // }
-                $update_user_data = [
-                    $user_phone,
-                    $user_name,
-                    $user_email,
-                    $user_degisnation,
-                    // $select_stage
-                ];
-                if (StateMethod::updateUserData('make_ceo_pd', $id, $update_user_data)) {
-                    $status = 200;
-                    $message = "User Data Upated";
+                try {
+                    $get_current_email = DB::table('make_ceo_pd')
+                        ->where('id', $id)
+                        ->select('email')
+                        ->get();
+                } catch (Exception $err) {
+                    $check = false;
+                }
+                if ($check) {
+                    if (!AddUserByState::checkEmailExists($user_email)) {
+                        $user_email = $get_current_email[0]->email;
+                    }
+                    $update_user_data = [
+                        $user_phone,
+                        $user_name,
+                        $user_email,
+                        $user_degisnation,
+                        // $select_stage
+                    ];
+                    if (StateMethod::updateUserData('make_ceo_pd', $id, $update_user_data)) {
+                        $status = 200;
+                        $message = "User Data Upated";
+                    } else {
+                        $status = 400;
+                        $message = "Some Error. Try Later !";
+                    }
                 } else {
-                    $status = 400;
-                    $message = "Some Error. Try Later !";
+                    $message = "Server Error Please Try Later ";
+                }
+            }
+            return response()->json(['status' => $status, 'message' => $message]);
+        }
+    }
+    // Reset CEO Password By State 
+    public function setResetPassCeo(Request $request)
+    {
+        if ($request->ajax()) {
+            $status = 400;
+            $message = "";
+            if ($_GET['employee_id']) {
+                $id = $_GET['employee_id'];
+                $check_res = StateMethod::checkValidPO($id);
+                if ($check_res[0]) {
+                    if (count($check_res[1]) == 1) {
+                        $password = DistrictMethod::generatePassword();
+                        $emailData = [
+                            'subject' => "Reset Password By State Panel",
+                            'password' => $password
+                        ];
+                        $check = MailSender::sendMailer($emailData, $check_res[1][0]->email, 'mail_blades.set_reset_passwordBy_state');
+                        if ($check) {
+                            if (StateMethod::resetPasswordMethod($password, $check_res[1][0]->email)) {
+                                $message = "Password Sent To CEO Email ";
+                                $status = 200;
+                            } else {
+                                $message = "Server Error Please Try Later !";
+                            }
+                        } else {
+                            $message = "Plaese Re-Generate password email lost ";
+                        }
+                    } else {
+                        $message = "Employee Details Not Found";
+                    }
+                } else {
+                    $message = "Server Error Please Try Later !";
                 }
             }
             return response()->json(['status' => $status, 'message' => $message]);

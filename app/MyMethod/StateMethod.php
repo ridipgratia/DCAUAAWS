@@ -4,6 +4,7 @@ namespace App\MyMethod;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class StateMethod
@@ -647,5 +648,40 @@ class StateMethod
             $emails['Block'] = $email[0]->login_email;
         }
         return [$emails, $check];
+    }
+    // Check Valid Po And Exists 
+    public static function checkValidPO($id)
+    {
+        $check = false;
+        $check_po = "";
+        try {
+            $check_po = DB::table('make_ceo_pd')
+                ->where('id', $id)
+                ->select(
+                    'email',
+                    'record_id'
+                )
+                ->get();
+            $check = true;
+        } catch (Exception $err) {
+            $check = false;
+        }
+        return [$check, $check_po];
+    }
+    // Reset Password By State 
+    public static function resetPasswordMethod($password, $email)
+    {
+        DB::beginTransaction();
+        try {
+            DB::table('login_details')
+                ->where('login_email', $email)
+                ->update([
+                    'login_password' => Hash::make($password)
+                ]);
+            DB::commit();
+            return true;
+        } catch (Exception $err) {
+            return false;
+        }
     }
 }

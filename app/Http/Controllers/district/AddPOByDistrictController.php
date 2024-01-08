@@ -210,33 +210,50 @@ class AddPOByDistrictController extends Controller
                     $user_degisnation,
                     // $select_stage
                 ];
-                DB::beginTransaction();
                 try {
-                    // $registration_id = "State_" . $select_stage;
-                    $registration_id = DB::table('make_po')->where('id', $id)->select('record_id')->get();
-                    DB::table('make_po')
-                        ->where('district_id', Auth::user()->district)
+                    $get_current_email = DB::table('make_po')
                         ->where('id', $id)
-                        ->update([
-                            'phone' => $user_phone,
-                            'name' => $user_name,
-                            'email' => $user_email,
-                            'deginations' => $user_degisnation,
-                            // 'block_id' => $select_stage,
-                            // 'registration_id' => $registration_id
-                        ]);
-                    DB::table('login_details')
-                        ->where('login_id', $registration_id[0]->record_id)
-                        ->update([
-                            'login_email' => $user_email
-                        ]);
-                    DB::commit();
-                    $status = 200;
-                    $message = "User Data Upated";
-                } catch (Exception $error) {
-                    DB::rollBack();
-                    $status = 400;
-                    $message = "Some Error. Try Later !";
+                        ->where('district_id', Auth::user()->district)
+                        ->select('email')
+                        ->get();
+                    $check = true;
+                } catch (Exception $err) {
+                    $check = false;
+                }
+                if ($check) {
+                    if (!AddUserByState::checkEmailExists($user_email)) {
+                        $user_email = $get_current_email[0]->email;
+                    }
+                    DB::beginTransaction();
+                    try {
+                        // $registration_id = "State_" . $select_stage;
+                        $registration_id = DB::table('make_po')->where('id', $id)->select('record_id')->get();
+                        DB::table('make_po')
+                            ->where('district_id', Auth::user()->district)
+                            ->where('id', $id)
+                            ->update([
+                                'phone' => $user_phone,
+                                'name' => $user_name,
+                                'email' => $user_email,
+                                'deginations' => $user_degisnation,
+                                // 'block_id' => $select_stage,
+                                // 'registration_id' => $registration_id
+                            ]);
+                        DB::table('login_details')
+                            ->where('login_id', $registration_id[0]->record_id)
+                            ->update([
+                                'login_email' => $user_email
+                            ]);
+                        DB::commit();
+                        $status = 200;
+                        $message = "User Data Upated";
+                    } catch (Exception $error) {
+                        DB::rollBack();
+                        $status = 400;
+                        $message = "Some Error. Try Later !";
+                    }
+                } else {
+                    $message = "Server Error Please Try Later !";
                 }
             }
             return response()->json(['status' => $status, 'message' => $message]);
@@ -270,6 +287,7 @@ class AddPOByDistrictController extends Controller
                         if ($check) {
                             if (DistrictMethod::resetPasswordMethod($password, $check_res[1], $id)) {
                                 $message = "Password Sent To PO Email ";
+                                $status = 200;
                             } else {
                                 $message = "Server Error Please Try Later";
                             }
@@ -285,7 +303,7 @@ class AddPOByDistrictController extends Controller
             } else {
                 $message = "Select a PO user ";
             }
-            return response()->json(['status' => 200, 'message' => $message]);
+            return response()->json(['status' => $status, 'message' => $message]);
         }
     }
 }
