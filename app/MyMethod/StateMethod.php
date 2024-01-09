@@ -65,7 +65,8 @@ class StateMethod
                 // 'distrcit_id' => $update_data[4],
                 // 'registration_id' => $registration_id
             ]);
-            DB::table('login_details')->where('login_id', $registration_id[0]->record_id)
+            DB::table('login_details')
+                ->where('login_id', $registration_id[0]->record_id)
                 ->update([
                     'login_email' => $update_data[2]
                 ]);
